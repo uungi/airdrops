@@ -1,34 +1,18 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
   "functions": {
     "api/*.ts": {
-      "runtime": "vercel-node@2.0.0"
+      "memory": 1024
     }
   },
-  "builds": [
-    {
-      "src": "server/index.ts",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "client/vite.config.ts",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/public"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server/index.ts"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/public/index.html"
-    }
+  "rewrites": [
+    { "source": "/api/notion/status", "destination": "/api/notion-status" },
+    { "source": "/api/notion/databases", "destination": "/api/notion-databases" },
+    { "source": "/api/notion/setup", "destination": "/api/notion-setup" },
+    { "source": "/api/notion/sample-data", "destination": "/api/sample-data" },
+    { "source": "/api/airdrops/featured", "destination": "/api/airdrops-featured" },
+    { "source": "/api/airdrops", "destination": "/api/airdrops" }
   ]
 }
