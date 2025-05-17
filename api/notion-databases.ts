@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getNotionDatabases } from '../server/notion';
+import { getNotionDatabases } from './notion';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {

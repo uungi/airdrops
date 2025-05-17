@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { addSampleAirdrops } from '../server/notion';
+import { addSampleAirdrops } from './notion';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
