@@ -7,12 +7,16 @@
       "memory": 1024
     }
   },
-  "rewrites": [
-    { "source": "/api/notion/status", "destination": "/api/notion-status" },
-    { "source": "/api/notion/databases", "destination": "/api/notion-databases" },
-    { "source": "/api/notion/setup", "destination": "/api/notion-setup" },
-    { "source": "/api/notion/sample-data", "destination": "/api/sample-data" },
-    { "source": "/api/airdrops/featured", "destination": "/api/airdrops-featured" },
-    { "source": "/api/airdrops", "destination": "/api/airdrops" }
-  ]
+  "routes": [
+    { "src": "/api/notion/status", "dest": "/api/notion-status" },
+    { "src": "/api/notion/databases", "dest": "/api/notion-databases" },
+    { "src": "/api/notion/setup", "dest": "/api/notion-setup" },
+    { "src": "/api/notion/sample-data", "dest": "/api/sample-data" },
+    { "src": "/api/airdrops/featured", "dest": "/api/airdrops-featured" },
+    { "src": "/api/airdrops", "dest": "/api/airdrops" },
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/(.+\\.[a-zA-Z]+)$", "dest": "/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "outputDirectory": "dist/public"
 }
