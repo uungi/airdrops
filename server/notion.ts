@@ -41,8 +41,8 @@ export async function getNotionDatabases() {
 
       // Process the results
       for (const block of response.results) {
-        // Check if the block is a child database
-        if (block.type === "child_database") {
+        // Safely check if the block has a type and is a child_database
+        if ('type' in block && block.type === "child_database") {
           const databaseId = block.id;
 
           // Retrieve the database title
@@ -76,11 +76,11 @@ export async function findDatabaseByTitle(title: string) {
   const databases = await getNotionDatabases();
 
   for (const db of databases) {
-    if (db.title && Array.isArray(db.title) && db.title.length > 0) {
-      const dbTitle = db.title[0]?.plain_text?.toLowerCase() || "";
-      if (dbTitle === title.toLowerCase()) {
-        return db;
-      }
+    // Kita berurusan dengan object response dari Notion API
+    // Pastikan kita mengakses title dengan cara yang aman
+    const dbTitle = (db as any).title?.[0]?.plain_text?.toLowerCase() || "";
+    if (dbTitle === title.toLowerCase()) {
+      return db;
     }
   }
 
@@ -208,15 +208,15 @@ export async function getAirdropsFromNotion(featuredOnly: boolean = false): Prom
       }
 
       return {
-        id: page.id,
+        id: Number(page.id) || 0,
         notionId: page.id,
         name: properties.Name?.title?.[0]?.plain_text || "Untitled Airdrop",
         description: properties.Description?.rich_text?.[0]?.plain_text || "",
         status: properties.Status?.select?.name || "Upcoming",
         platform: properties.Platform?.select?.name || "Other",
         estimatedValue: properties.EstimatedValue?.rich_text?.[0]?.plain_text || "Unknown",
-        startDate: startDate,
-        endDate: endDate,
+        startDate: startDate ? startDate.toISOString().split('T')[0] : null,
+        endDate: endDate ? endDate.toISOString().split('T')[0] : null,
         timing: timing,
         imageUrl: properties.ImageUrl?.url || "",
         projectUrl: properties.ProjectUrl?.url || "",

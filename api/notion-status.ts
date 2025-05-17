@@ -18,7 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Test Notion API connection
-    await notion.users.me();
+    const response = await notion.users.list({});
 
     return res.json({
       notion_connected: true,
